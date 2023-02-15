@@ -1,19 +1,32 @@
 const express = require("express");
 const cors = require("cors");  
 const app = express();
-app.use(cors()); // 开启全局CORS
+app.use(express.json());
+// app.use(cors()); // 开启全局CORS
 
 const port = 3010;
 const path = require("path");
 
+const admin = {
+  name: "Bob",
+  age: 17
+}
+
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send(JSON.stringify(admin));
 });
 
 app.get("/public-data", (req, res) => {
-  console.log("/public-data is called from: ", req.headers.referer);
+  console.log("get /public-data is called from: ", req.headers.referer);
   res.sendFile(path.resolve("pages/public-data.html"));
 });
+
+app.post("/a-form-to", (req, res) => {
+  console.log("post /a-form-to is called from: ", req.headers.referer);
+  admin.name = req.body.name;
+  admin.age = req.body.age;
+  res.send(JSON.stringify(admin));
+})
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
