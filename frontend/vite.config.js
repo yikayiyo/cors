@@ -13,14 +13,15 @@ export default defineConfig((mode) => {
       },
     },
     // 2. 通过代理转发请求
-    // server: {
-    //   proxy: {
-    //     "/api": {
-    //       target: `http://localhost:${env.VITE_API_PORT}`,
-    //       changeOrigin: true,
-    //       rewrite: (path) => path.replace(/^\/api/, ""),
-    //     },
-    //   },
-    // },
+    server: {
+      proxy: {
+        "/api": {
+          target: `http://localhost:${env.VITE_API_PORT}`,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ""),
+        },
+        // '/': `http://localhost:${env.VITE_API_PORT}`,
+      },
+    },
   };
 });

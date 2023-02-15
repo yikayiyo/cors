@@ -7,8 +7,8 @@ const content = ref("");
 const handleGet = () => {
   content.value = "";
   httpRequest({
-    url: "/public-data", // 1. 直接请求服务器
-    // url: "/api/public-data",
+    // url: "/public-data", // 1. 直接请求服务器
+    url: "/api/public-data",
   })
     .then((res) => {
       if (res.code === 200) {
@@ -22,7 +22,7 @@ const handleGet = () => {
 };
 onMounted(() => {
   httpRequest({
-    url: "/public-data",
+    url: "/api/public-data",
     type: "get",
   })
     .then(function (res) {
@@ -50,7 +50,7 @@ const adminInfo = computed(() => {
 });
 const handlePost = () => {
   httpRequest({
-    url: "/a-form-to",
+    url: "/api/a-form-to",
     method: "post",
     data: {
       name: form.name,
@@ -73,7 +73,7 @@ const handlePost = () => {
 
 onMounted(() => {
   httpRequest({
-    url: "/",
+    url: "/api/",
     type: "get",
   })
     .then(function (res) {

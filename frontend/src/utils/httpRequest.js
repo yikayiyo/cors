@@ -2,7 +2,7 @@ import axios from 'axios';
 
 function myAxios(axiosConfig) {
   const service = axios.create({
-    baseURL: "http://localhost:3010",  // 1. 直接请求服务器
+    // baseURL: "http://localhost:3010",  // 1. 直接请求服务器
     timeout: 10000, // 设置统一的超时时长
   });
   // 请求拦截
