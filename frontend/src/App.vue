@@ -23,7 +23,7 @@ const handleGet = () => {
 onMounted(() => {
   httpRequest({
     url: "/api/public-data",
-    type: "get",
+    method: "get",
   })
     .then(function (res) {
       if (res.code == 200) {
@@ -74,7 +74,7 @@ const handlePost = () => {
 onMounted(() => {
   httpRequest({
     url: "/api/",
-    type: "get",
+    method: "get",
   })
     .then(function (res) {
       if (res.code == 200) {
@@ -87,6 +87,21 @@ onMounted(() => {
       console.error("get admin info failed, ", err);
     });
 });
+
+// Preflight
+const sendPreflight = () => {
+  httpRequest({
+    url: "/a-form-to",
+    method: "post",
+    headers: {
+      'X-is-legao': 'yes'
+    }
+  }).then(function(res) {
+    console.log("preflight: ", res);
+  }).catch(function(err) {
+    console.error("preflight:", err);
+  })
+}
 </script>
 
 <template>
@@ -111,5 +126,7 @@ onMounted(() => {
       />
     </div>
     <button @click="handlePost">POST /a-form-to</button>
+    <p>A preflight request</p>
+    <button @click="sendPreflight">POST /a-form-to with x-headers</button>
   </div>
 </template>
