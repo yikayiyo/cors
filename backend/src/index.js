@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");  
 const app = express();
 app.use(express.json());
-// app.use(cors()); // 开启全局CORS
+app.use(cors()); // 开启全局CORS
 
 const port = 3010;
 const path = require("path");
@@ -13,6 +13,10 @@ const admin = {
 }
 
 app.get("/", (req, res) => {
+  res.send("hello express.js");
+});
+
+app.get("/admin-data", (req, res) => {
   res.send(JSON.stringify(admin));
 });
 

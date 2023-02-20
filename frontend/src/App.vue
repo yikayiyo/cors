@@ -7,8 +7,8 @@ const content = ref("");
 const handleGet = () => {
   content.value = "";
   httpRequest({
-    // url: "/public-data", // 1. 直接请求服务器
-    url: "/api/public-data",
+    url: "/public-data", // 1. 直接请求服务器
+    // url: "/api/public-data",
   })
     .then((res) => {
       if (res.code === 200) {
@@ -22,7 +22,7 @@ const handleGet = () => {
 };
 onMounted(() => {
   httpRequest({
-    url: "/api/public-data",
+    url: "/public-data",
     method: "get",
   })
     .then(function (res) {
@@ -38,19 +38,19 @@ onMounted(() => {
 
 // POST
 const admin = reactive({
-  name: "Not exsit",
-  age: "0",
+  name: "",
+  age: "",
 });
 const form = reactive({
   name: "",
   age: "",
 });
 const adminInfo = computed(() => {
-  return `Admin Info: ${admin.name} + ${admin.age}`;
+  return `${admin.name} ${admin.age}`;
 });
 const handlePost = () => {
   httpRequest({
-    url: "/api/a-form-to",
+    url: "/a-form-to",
     method: "post",
     data: {
       name: form.name,
@@ -62,6 +62,7 @@ const handlePost = () => {
         console.log("post admin info successed, ", res);
         admin.name = res.data.name;
         admin.age = res.data.age;
+        resetForm();
       } else {
         console.log("post admin info failed, ", res);
       }
@@ -73,7 +74,7 @@ const handlePost = () => {
 
 onMounted(() => {
   httpRequest({
-    url: "/api/",
+    url: "/admin-data",
     method: "get",
   })
     .then(function (res) {
@@ -94,39 +95,91 @@ const sendPreflight = () => {
     url: "/a-form-to",
     method: "post",
     headers: {
-      'X-is-legao': 'yes'
+      "X-is-legao": "yes",
+    },
+    data: {
+      name: form.name,
+      age: form.age
     }
-  }).then(function(res) {
-    console.log("preflight: ", res);
-  }).catch(function(err) {
-    console.error("preflight:", err);
   })
+    .then(function (res) {
+      console.log("preflight: ", res);
+      if(res.code == 200) {
+        admin.name = res.data.name;
+        admin.age = res.data.age;
+        resetForm();
+      }
+    })
+    .catch(function (err) {
+      console.error("preflight:", err);
+    });
+};
+
+const resetForm = () => {
+  form.age = "";
+  form.name = "";
 }
 </script>
 
 <template>
-  <div>
-    <button @click="handleGet">GET /public-data</button>
-    <p v-html="content"></p>
-    <div>{{ adminInfo }}</div>
-    <div class="row">
-      <label for="name">Name: </label>
-      <input
-        type="text"
-        id="name"
-        v-model="form.name"
-      />
-    </div>
-    <div class="row">
-      <label for="name">Age: </label>
-      <input
-        type="text"
-        id="age"
-        v-model="form.age"
-      />
-    </div>
-    <button @click="handlePost">POST /a-form-to</button>
-    <p>A preflight request</p>
-    <button @click="sendPreflight">POST /a-form-to with x-headers</button>
+  <div class="main-container min-h-screen bg-slate-200">
+    <section class="mb-2">
+      <h1 class="text-3xl">CORS - HTTP request</h1>
+      <h2 class="text-2xl">A "simple" request</h2>
+      <button
+        class="btn btn-sm mt-2 relative left-[50%] -translate-x-[50%]"
+        @click="handleGet"
+      >
+        GET /public-data
+      </button>
+      <p
+        class="border border-black p-10 mt-2"
+        v-html="content"
+      ></p>
+    </section>
+    <section class="mb-2">
+      <h2 class="text-2xl">Admin info</h2>
+      <p class="p-4 border border-black">{{ adminInfo }}</p>
+      <div class="form-control mt-2">
+        <label class="input-group justify-center">
+          <span>Name</span>
+          <input
+            v-model="form.name"
+            type="text"
+            class="input input-bordered input-sm"
+          />
+        </label>
+      </div>
+      <div class="form-control mt-2">
+        <label class="input-group justify-center">
+          <span>Age</span>
+          <input
+            v-model="form.age"
+            type="text"
+            class="input input-bordered input-sm"
+          />
+        </label>
+      </div>
+      <button
+        class="btn btn-sm mt-2 relative left-[50%] -translate-x-[50%]"
+        @click="handlePost"
+      >
+        POST /a-form-to
+      </button>
+    </section>
+    <section class="mt-2">
+      <p class="text-2xl">A "not simple" request</p>
+      <button
+        class="btn btn-sm mt-2 relative left-[50%] -translate-x-[50%]"
+        @click="sendPreflight"
+      >
+        POST /a-form-to with x-headers
+      </button>
+    </section>
+    <section>
+      <h1 class="text-3xl">CORS - IMAGE</h1>
+      <img class="border min-w-[100px] bg-slate-400 min-h-[100px] w-full max-w-[750px] h-auto" src="https://github.com/yikayiyo/blogs-at-mola/blob/main/docs/images/lint-error-1.png" alt="">
+      <img class="border min-w-[100px] bg-slate-400 min-h-[100px] w-full max-w-[750px] h-auto" src="https://t7.baidu.com/it/u=2168645659,3174029352&fm=193&f=GIF" alt="">
+    </section>
   </div>
 </template>
