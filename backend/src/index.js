@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");  
 const app = express();
 app.use(express.json());
-app.use(cors()); // 开启全局CORS
+// app.use(cors()); // 开启全局CORS
 
 const port = 3010;
 const path = require("path");
@@ -27,6 +27,13 @@ app.get("/public-data", (req, res) => {
 
 app.post("/a-form-to", (req, res) => {
   console.log("post /a-form-to is called from: ", req.headers.referer);
+  admin.name = req.body.name;
+  admin.age = req.body.age;
+  res.send(JSON.stringify(admin));
+})
+
+app.put("/a-form-to", (req, res) => {
+  console.log("put /a-form-to is called from: ", req.headers.referer);
   admin.name = req.body.name;
   admin.age = req.body.age;
   res.send(JSON.stringify(admin));
