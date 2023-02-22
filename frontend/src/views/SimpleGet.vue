@@ -33,6 +33,7 @@ onMounted(() => {
     })
     .catch(function (err) {
       console.error("get public data info failed, ", err);
+      content.value = `<div style="color:blue; font-size: 32px;">${err.message}</div>`;
     });
 });
 </script>
