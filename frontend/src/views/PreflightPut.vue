@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from "vue";
+import { computed, reactive, onMounted } from "vue";
 import httpRequest from "@/utils/httpRequest";
 
 const admin = reactive({
@@ -12,11 +12,35 @@ const form = reactive({
   age: "",
 });
 
+const adminInfo = computed(() => {
+  return admin.name + admin.age || "";
+})
+
+onMounted(() => {
+  httpRequest({
+    url: "/admin-data",
+    method: "get",
+  })
+    .then(function (res) {
+      if (res.code == 200) {
+        console.log("get admin info successed, ", res);
+        admin.name = res.data.name;
+        admin.age = res.data.age;
+      }
+    })
+    .catch(function (err) {
+      console.error("get admin info failed, ", err);
+    });
+})
+
 // put preflight
 const putPreflight = () => {
   httpRequest({
-    url: "/a-form-to",
+    url: "/a-form-to-put",
     method: "put",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
     data: {
       name: form.name,
       age: form.age
@@ -39,14 +63,16 @@ const resetForm = () => {
   form.age = "";
   form.name = "";
 }
+
 </script>
 
 <template>
   <div class="main-container min-h-screen bg-slate-200 pb-20">
-    <section class="mb-2">
-      <h2 class="text-2xl">Admin info</h2>
-      <p class="p-4 border border-black">{{ adminInfo }}</p>
-      <div class="form-control mt-2">
+    <section class="mb-2 text-center">
+      <h1 class="text-3xl">CORS - HTTP request</h1>
+      <h2 class="text-2xl mt-4">Admin info</h2>
+      <p class="p-4 border border-black mt-4">{{ adminInfo }}</p>
+      <div class="form-control mt-4">
         <label class="input-group justify-center">
           <span>Name</span>
           <input
@@ -56,7 +82,7 @@ const resetForm = () => {
           />
         </label>
       </div>
-      <div class="form-control mt-2">
+      <div class="form-control mt-4">
         <label class="input-group justify-center">
           <span>Age</span>
           <input
@@ -66,14 +92,12 @@ const resetForm = () => {
           />
         </label>
       </div>
-    </section>
-    <section class="mt-2">
-      <p class="text-2xl">A "not simple" request</p>
+      <p class="text-2xl mt-4">A "not simple" request</p>
       <button
-        class="btn btn-sm mt-2 relative left-[50%] -translate-x-[50%]"
+        class="btn btn-sm mt-4"
         @click="putPreflight"
       >
-        PUT /a-form-to
+        PUT /a-form-to-put
       </button>
     </section>
   </div>

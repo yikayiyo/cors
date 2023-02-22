@@ -39,6 +39,11 @@ const handlePost = () => {
     });
 };
 
+const resetForm = () => {
+  form.name = "";
+  form.age = "";
+}
+
 onMounted(() => {
   httpRequest({
     url: "/admin-data",
@@ -61,7 +66,7 @@ onMounted(() => {
     <section class="mb-2 text-center">
       <h1 class="text-3xl">CORS - HTTP request</h1>
       <h2 class="text-2xl mt-4">Admin info</h2>
-      <p class="p-4 border border-black">{{ adminInfo }}</p>
+      <p class="p-4 border border-black mt-4">{{ adminInfo }}</p>
       <div class="form-control mt-4">
         <label class="input-group justify-center">
           <span>Name</span>
@@ -82,6 +87,7 @@ onMounted(() => {
           />
         </label>
       </div>
+      <h2 class="text-2xl mt-4">A "simple" request</h2>
       <button
         class="btn btn-sm mt-4"
         @click="handlePost"
