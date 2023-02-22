@@ -38,21 +38,29 @@ app.post(
   "/a-form-to-wx",
   cors({
     origin: 'http://example.com',
-    // allowedHeaders: ["x-is-bill"],
+    allowedHeaders: ["x-is-bill"],
   }),
   (req, res) => {
     console.log("post /a-form-to-wx is called from: ", req.headers.referer);
     admin.name = req.body.name;
     admin.age = req.body.age;
-    res.send(JSON.stringify(admin));
+    res.json(admin);
   }
 );
 
-app.put("/a-form-to-put", (req, res) => {
+const putCorsOpt = {
+  "origin": 'https://localhost:5173',
+  "methods": "PUT",
+  "optionsSuccessStatus": 204
+}
+app.options("/a-form-to-put", cors({...putCorsOpt})); // enable pre-flight request for DELETE request
+app.put("/a-form-to-put", cors({
+  ...putCorsOpt
+}), (req, res) => {
   console.log("put /a-form-to-put is called from: ", req.headers.referer);
   admin.name = req.body.name;
   admin.age = req.body.age;
-  res.send(JSON.stringify(admin));
+  res.json(admin);
 });
 
 app.listen(port, () => {
