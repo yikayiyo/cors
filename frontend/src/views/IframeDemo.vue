@@ -32,7 +32,7 @@ const getTextInIframe = () => {
         width="100%"
         frameborder="0"
       ></iframe> -->
-      <p v-html="embed" class="p-10 mt-4 border border-b-zinc-500"></p>
+      <p v-html="embed" class="p-10 mt-4 border border-zinc-500"></p>
       <button class="btn btn-sm mt-4" @click="getTextInIframe">
         OP IFRAME
       </button>
