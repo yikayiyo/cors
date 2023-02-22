@@ -14,6 +14,8 @@ const isActive = (tabName) => {
       <li class="tab  tab-lifted" :class="isActive('/simple-post')? 'tab-active': ''"><router-link to="/simple-post">"Simple" Post</router-link></li>
       <li class="tab  tab-lifted" :class="isActive('/preflight-w-x')? 'tab-active': ''"><router-link to="/preflight-w-x">/preflight-w-x</router-link></li>
       <li class="tab  tab-lifted" :class="isActive('/preflight-put')? 'tab-active': ''"><router-link to="/preflight-put">/preflight-put</router-link></li>
+      <li class="tab  tab-lifted" :class="isActive('/cors-iframe')? 'tab-active': ''"><router-link to="/cors-iframe">/cors-iframe</router-link></li>
+      <li class="tab  tab-lifted" :class="isActive('/cors-img')? 'tab-active': ''"><router-link to="/cors-img">/cors-img</router-link></li>
     </ul>
     <router-view></router-view>
   </div>

@@ -38,7 +38,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="main-container min-h-screen bg-slate-200 pb-20">
     <section class="mb-2 text-center">
       <h1 class="text-3xl">CORS - HTTP request</h1>
       <p
@@ -53,5 +52,4 @@ onMounted(() => {
         GET /public-data
       </button>
     </section>
-  </div>
 </template>

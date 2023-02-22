@@ -34,11 +34,17 @@ app.post("/a-form-to", (req, res) => {
   res.send(JSON.stringify(admin));
 });
 
+const postCorsOpt = {
+  "origin": 'http://localhost:5173',
+  "methods": "POST",
+  "allowedHeaders": ["x-is-bill"],
+  "optionsSuccessStatus": 204
+}
+app.options("/a-form-to-wx", cors({...postCorsOpt})); // enable pre-flight request
 app.post(
   "/a-form-to-wx",
   cors({
-    origin: 'http://example.com',
-    allowedHeaders: ["x-is-bill"],
+    ...postCorsOpt
   }),
   (req, res) => {
     console.log("post /a-form-to-wx is called from: ", req.headers.referer);
@@ -53,7 +59,7 @@ const putCorsOpt = {
   "methods": "PUT",
   "optionsSuccessStatus": 204
 }
-app.options("/a-form-to-put", cors({...putCorsOpt})); // enable pre-flight request for DELETE request
+app.options("/a-form-to-put", cors({...putCorsOpt})); // enable pre-flight request
 app.put("/a-form-to-put", cors({
   ...putCorsOpt
 }), (req, res) => {

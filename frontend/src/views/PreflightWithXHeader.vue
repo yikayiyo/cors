@@ -67,7 +67,6 @@ const resetForm = () => {
 </script>
 
 <template>
-  <div class="main-container min-h-screen bg-slate-200 pb-20">
     <section class="mb-2 text-center">
       <h1 class="text-3xl">CORS - HTTP request</h1>
       <h2 class="text-2xl mt-4">Admin info</h2>
@@ -100,5 +99,4 @@ const resetForm = () => {
         POST /a-form-to with x-headers
       </button>
     </section>
-  </div>
 </template>
