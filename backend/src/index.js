@@ -55,7 +55,7 @@ app.post(
 );
 
 const putCorsOpt = {
-  "origin": 'https://localhost:5173',
+  "origin": 'http://localhost:5173',
   "methods": "PUT",
   "optionsSuccessStatus": 204
 }

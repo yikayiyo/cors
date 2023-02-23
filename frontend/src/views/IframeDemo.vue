@@ -19,19 +19,19 @@ const getTextInIframe = () => {
   <section class="text-center">
       <h1 class="text-3xl mt-4">CORS - IFRAME</h1>
       <a class="link link-primary" href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLIFrameElement/contentDocument">说明</a>
-      <iframe
+      <!-- <iframe
         id="iframe"
         src="https://gzfe.xinhuaskl.com/kt/"
         width="100%"
         frameborder="0"
         style="height: 700px; will-change: transform"
-      ></iframe>
-      <!-- <iframe
+      ></iframe> -->
+      <iframe
         id="iframe"
         src="http://localhost:5173/simple-get"
         width="100%"
         frameborder="0"
-      ></iframe> -->
+      ></iframe>
       <p v-html="embed" class="p-10 mt-4 border border-zinc-500"></p>
       <button class="btn btn-sm mt-4" @click="getTextInIframe">
         OP IFRAME
